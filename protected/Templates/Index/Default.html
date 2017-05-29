@@ -1,6 +1,12 @@
 {% extends 'Index.html' %}
 
 {% block content %}
-    <h1>Hello, world!</h1>
-    <h2>It's T4 framework!</h2>
+
+    {% if (app.user is not null) %}
+        <p>Добро пожаловать, {{ app.user.firstName }} {{ app.user.lastName }}</p>
+        <p><a href="/user/logout/">Выход с сайта</a></p>
+    {% else %}
+        <p><a href="/user/login/">Вход на сайт</a></p>
+    {% endif %}
+
 {% endblock %}

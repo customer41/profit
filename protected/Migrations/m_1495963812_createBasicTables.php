@@ -14,10 +14,10 @@ class m_1495963812_createBasicTables
         $this->createTable('__users', [
             'email' => ['type' => 'string', 'length' => 50],
             'password' => ['type' => 'string', 'length' => 100],
-            'registered' => ['type' => 'datetime', 'default' => 'current_timestamp'],
+            'registered' => ['type' => 'datetime'],
             'firstName' => ['type' => 'string', 'length' => 30],
             'lastName' => ['type' => 'string', 'length' => 30],
-            'startSum' => ['type' => 'int', 'length' => 'long', 'attributes' => 'unsigned'],
+            'startSum' => ['type' => 'int', 'length' => 'long'],
         ], [
             'email_idx' => ['type' => 'unique', 'columns' => ['email']],
         ]);
@@ -25,6 +25,7 @@ class m_1495963812_createBasicTables
         $adminId = $this->insert('__users', [
             'email' => 'alien1986cs@gmail.com',
             'password' => '$2y$10$yLr5bIET8VZj3c4sDwgLp.sCZCJK42HDvs8MYoi/2wu2Jv7dTQPzm',
+            'registered' => date('Y-m-d H:i:s'),
             'firstName' => 'Александр',
             'lastName' => 'Попов',
         ]);
@@ -37,8 +38,18 @@ class m_1495963812_createBasicTables
         ]);
 
         $adminRoleId = $this->insert('__user_roles', [
-            'name' => 'Admin',
+            'name' => 'Administrator',
             'title' => 'Администратор',
+        ]);
+
+        $this->insert('__user_roles', [
+            'name' => 'Moderator',
+            'title' => 'Модератор',
+        ]);
+
+        $this->insert('__user_roles', [
+            'name' => 'User',
+            'title' => 'Пользователь',
         ]);
 
         $this->createTable('__user_roles_to_users', [

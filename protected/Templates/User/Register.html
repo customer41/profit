@@ -1,0 +1,55 @@
+{% extends 'Index.html' %}
+
+{% block content %}
+
+    <h1>Регистрация пользователя</h1>
+
+    {% for error in errors %}
+        <div class="row">
+            <div class="col-sm-12 alert alert-danger">
+                {{ error.getMessage() }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <form class="form-horizontal" action="/user/register/" method="post">
+        <div class="form-group">
+            <label for="firstname" class="col-sm-4 control-label">Имя*</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="firstname" name="register[firstName]" value="{{ register.firstName }}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastname" class="col-sm-4 control-label">Фамилия*</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="lastname" name="register[lastName]" value="{{ register.lastName }}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-4 control-label">Email*</label>
+            <div class="col-sm-4">
+                <input type="email" class="form-control" id="email" name="register[email]" value="{{ register.email }}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pass" class="col-sm-4 control-label">Пароль*</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="pass" name="register[password]" value="{{ register.password }}" maxlength="15">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="repass" class="col-sm-4 control-label">Повторить пароль*</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="repass" name="register[repassword]" value="{{ register.repassword }}" maxlength="15">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-4">
+                <button type="submit" class="btn btn-default">Регистрация</button>
+            </div>
+        </div>
+    </form>
+
+    <p>* - поля, обязательные к заполнению</p>
+
+{% endblock %}

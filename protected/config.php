@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'title' => 'Profit - система по контролю за личным бюджетом',
+
     'db' => [
         'default' => [
             'driver' => 'mysql',

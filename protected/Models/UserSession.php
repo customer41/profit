@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use T4\Orm\Model;
 
 class UserSession
