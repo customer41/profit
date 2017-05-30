@@ -2,11 +2,4 @@
 
 {% block content %}
 
-    {% if (app.user is not null) %}
-        <p>Добро пожаловать, {{ app.user.firstName }} {{ app.user.lastName }}</p>
-        <p><a href="/user/logout/">Выход с сайта</a></p>
-    {% else %}
-        <p><a href="/user/login/">Вход на сайт</a></p>
-    {% endif %}
-
 {% endblock %}

@@ -10,9 +10,41 @@
 <body>
     <div class="container">
         <div id="header">
-            <h1>"PROFIT" <small>система по контролю за личным бюджетом</small></h1>
+            <h1>&laquo;PROFIT&raquo; <small>система по контролю за личным бюджетом</small></h1>
         </div>
-        <div id="menu"></div>
+        <div id="identity" class="row">
+            {% if (app.user is null) %}
+                <div class="col-sm-1 col-sm-offset-10">
+                    <a href="/user/login/">
+                        <button type="button" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Вход
+                        </button>
+                    </a>
+                </div>
+            {% else %}
+                <div class="col-sm-4 col-sm-offset-6">
+                    <p class="welcome">Добро пожаловать, {{ app.user.firstName }} {{ app.user.lastName }}!</p>
+                </div>
+                <div class="col-sm-1">
+                    <a href="/user/logout/">
+                        <button type="button" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Выход
+                        </button>
+                    </a>
+                </div>
+            {% endif %}
+            <div class="col-sm-1">
+                <a href="/user/register/">
+                    <button type="button" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span> Регистрация
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div id="menu" class="row">
+            <div class="col-sm-1"><a href="/">ГЛАВНАЯ</a></div>
+            <div class="col-sm-2"><a href="/">ЛИЧНЫЙ КАБИНЕТ</a></div>
+        </div>
         <div id="content">
             {% block content %}
             {% endblock %}
