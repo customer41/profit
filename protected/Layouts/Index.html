@@ -8,32 +8,35 @@
     <link href="{{ asset('/Assets/css/index.css') }}" rel="stylesheet">
 </head>
 <body>
+
     <div class="container">
+
         <div id="header">
             <h1>&laquo;PROFIT&raquo; <small>система по контролю за личным бюджетом</small></h1>
         </div>
+
         <div id="identity" class="row">
-            {% if (app.user is null) %}
-                <div class="col-sm-1 col-sm-offset-10">
+            <div class="col-sm-9" id="welcome">
+                {% if (app.user is not null) %}
+                    Добро пожаловать, {{ app.user.firstName }} {{ app.user.lastName }}!
+                {% endif %}
+            </div>
+            <div class="col-sm-1">
+                {% if (app.user is null) %}
                     <a href="/user/login/">
                         <button type="button" class="btn btn-default btn-xs">
                             <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Вход
                         </button>
                     </a>
-                </div>
-            {% else %}
-                <div class="col-sm-4 col-sm-offset-6">
-                    <p class="welcome">Добро пожаловать, {{ app.user.firstName }} {{ app.user.lastName }}!</p>
-                </div>
-                <div class="col-sm-1">
+                {% else %}
                     <a href="/user/logout/">
                         <button type="button" class="btn btn-default btn-xs">
                             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Выход
                         </button>
                     </a>
-                </div>
-            {% endif %}
-            <div class="col-sm-1">
+                {% endif %}
+            </div>
+            <div class="col-sm-2">
                 <a href="/user/register/">
                     <button type="button" class="btn btn-default btn-xs">
                         <span class="glyphicon glyphicon-registration-mark" aria-hidden="true"></span> Регистрация
@@ -41,17 +44,25 @@
                 </a>
             </div>
         </div>
-        <div id="menu" class="row">
-            <div class="col-sm-1"><a href="/">ГЛАВНАЯ</a></div>
-            <div class="col-sm-2"><a href="/">ЛИЧНЫЙ КАБИНЕТ</a></div>
+
+        <div id="menu">
+            <ul class="nav nav-tabs">
+                <li role="presentation"><a href="/">Главная</a></li>
+                <li role="presentation"><a href="/">Личный кабинет</a></li>
+            </ul>
         </div>
+
         <div id="content">
             {% block content %}
             {% endblock %}
         </div>
+
         <div id="clear"></div>
+
     </div>
+
     <div id="footer"></div>
+
     {{ publishJs() }}
 </body>
 </html>
