@@ -53,3 +53,7 @@ html, body {
 h2 {
     text-align: center;
 }
+
+.panel {
+    margin-right: 20px;
+}

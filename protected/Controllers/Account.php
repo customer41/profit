@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use T4\Core\MultiException;
 use T4\Mvc\Controller;
 
 class Account
@@ -26,15 +27,16 @@ class Account
 
     }
 
-    public function actionSetStartSum($startSum = null)
+    public function actionSetInitVal($values = null)
     {
-        if (null != $startSum) {
-            $user = $this->app->user;
-            $user->startSum = $startSum;
-            $user->save();
-            $this->redirect('/account/settings');
+        if (null !== $values) {
+            try {
+                $this->app->user->extra->fill($values)->save();
+            } catch (MultiException $errors) {
+                $this->app->flash->errors = $errors;
+            }
+            $this->redirect('/account/settings/');
         }
-        $this->data->startSum = $this->app->user->startSum ?? 0;
     }
 
 }

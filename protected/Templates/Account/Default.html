@@ -3,9 +3,9 @@
 {% block content %}
     <h2>Личный кабинет пользователя</h2>
     <h3>Личная информация пользователя:</h3>
-    <p>Имя: {{ user.firstName }}</p>
-    <p>Фамилия: {{ user.lastName }}</p>
-    <p>Дата регистрации: {{ user.registered }}</p>
-    <p>Адрес электронной почты: {{ user.email }}</p>
+    <p><b>Имя:</b> {{ user.firstName }}</p>
+    <p><b>Фамилия:</b> {{ user.lastName }}</p>
+    <p><b>Дата регистрации:</b> {{ user.registered }}</p>
+    <p><b>Адрес электронной почты:</b> {{ user.email }}</p>
     <h3>Перейти к <a href="/account/settings/">настройкам</a></h3>
 {% endblock %}

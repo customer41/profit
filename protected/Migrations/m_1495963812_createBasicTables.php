@@ -17,7 +17,6 @@ class m_1495963812_createBasicTables
             'registered' => ['type' => 'datetime'],
             'firstName' => ['type' => 'string', 'length' => 30],
             'lastName' => ['type' => 'string', 'length' => 30],
-            'startSum' => ['type' => 'int', 'length' => 'long'],
         ], [
             'email_idx' => ['type' => 'unique', 'columns' => ['email']],
         ]);
@@ -28,6 +27,24 @@ class m_1495963812_createBasicTables
             'registered' => date('Y-m-d H:i:s'),
             'firstName' => 'Александр',
             'lastName' => 'Попов',
+        ]);
+
+        $this->createTable('__users_extra', [
+            'startSum' => ['type' => 'int', 'length' => 'long'],
+            'profit' => ['type' => 'int', 'length' => 'long'],
+            'costs' => ['type' => 'int', 'length' => 'long'],
+            'debt' => ['type' => 'int', 'length' => 'long'],
+            'balance' => ['type' => 'int', 'length' => 'long'],
+            '__user_id' => ['type' => 'link'],
+        ]);
+
+        $this->insert('__users_extra', [
+            'startSum' => 0,
+            'profit' => 0,
+            'costs' => 0,
+            'debt' => 0,
+            'balance' => 0,
+            '__user_id' => $adminId,
         ]);
 
         $this->createTable('__user_roles', [
@@ -73,6 +90,7 @@ class m_1495963812_createBasicTables
     public function down()
     {
         $this->dropTable('__user_sessions');
+        $this->dropTable('__users_extra');
         $this->dropTable('__user_roles_to_users');
         $this->dropTable('__user_roles');
         $this->dropTable('__users');

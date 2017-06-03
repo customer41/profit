@@ -23,6 +23,7 @@ class User
 
         'relations' => [
             'roles' => ['type' => self::MANY_TO_MANY, 'model' => Role::class, 'on' => '__user_roles_to_users'],
+            'extra' => ['type' => self::HAS_ONE, 'model' => UserExtra::class],
         ]
     ];
 
