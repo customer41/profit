@@ -39,11 +39,6 @@ class m_1495963812_createBasicTables
         ]);
 
         $this->insert('__users_extra', [
-            'startSum' => 0,
-            'profit' => 0,
-            'costs' => 0,
-            'debt' => 0,
-            'balance' => 0,
             '__user_id' => $adminId,
         ]);
 

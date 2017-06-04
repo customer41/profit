@@ -29,13 +29,21 @@ class Account
 
     public function actionSetInitVal($values = null)
     {
+        $extra = $this->app->user->extra;
+        if (null != $extra->startSum || null != $extra->debt) {
+            $this->data->init = true;
+            $this->data->startSum = $extra->startSum;
+            $this->data->debt = $extra->debt;
+        }
+
         if (null !== $values) {
             try {
-                $this->app->user->extra->fill($values)->save();
+                $this->data->values = $values;
+                $extra->fill($values)->save();
+                $this->redirect('/account/setInitVal/');
             } catch (MultiException $errors) {
-                $this->app->flash->errors = $errors;
+                $this->data->errors = $errors;
             }
-            $this->redirect('/account/settings/');
         }
     }
 

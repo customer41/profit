@@ -1,0 +1,54 @@
+{% extends 'Index.html' %}
+
+{% block content %}
+
+    <h2>Начальные значения</h2>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Установка начальных значений</h3>
+        </div>
+        <div class="panel-body">
+
+            {% if (init) %}
+
+                <p>Стартовая сумма: {{ startSum }} руб.</p>
+                <p>Суммарный долг: {{ debt }} руб.</p>
+                <h4><a href="/account/settings/">Перейти к другим настройкам</a></h4>
+
+            {% else %}
+
+                <h4 class="text-info">Внимание! Начальные значения требуется установить 1 раз! Потом эта функция будет недоступна!</h4>
+
+                {% for error in errors %}
+                    <p class="text-warning">{{ error.getMessage() }}</p>
+                {% endfor %}
+
+                <form class="form-horizontal" action="/account/setInitVal/" method="post">
+                    <div class="form-group">
+                        <label for="startSum" class="col-sm-2 control-label">Стартовая сумма</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control input-sm" id="startSum" name="values[startSum]" value="{{ values.startSum }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="debt" class="col-sm-2 control-label">Суммарный долг</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control input-sm" id="debt" name="values[debt]" value="{{ values.debt }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-2">
+                            <button type="submit" class="btn btn-default btn-sm">Установить</button>
+                        </div>
+                    </div>
+                </form>
+
+                <h4><a href="/account/settings/">Перейти к другим настройкам</a></h4>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}
