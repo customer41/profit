@@ -30,15 +30,16 @@ class Account
     public function actionSetInitVal($values = null)
     {
         $extra = $this->app->user->extra;
-        if (null != $extra->startSum || null != $extra->debt) {
+        if (null != $extra->startSum || null != $extra->borrowed || null != $extra->loaned) {
             $this->data->init = true;
-            $this->data->startSum = $extra->startSum;
-            $this->data->debt = $extra->debt;
+            $this->data->extra = $extra;
         }
 
         if (null !== $values) {
             try {
                 $this->data->values = $values;
+                $values->profit = 0;
+                $values->costs = 0;
                 $extra->fill($values)->save();
                 $this->redirect('/account/setInitVal/');
             } catch (MultiException $errors) {

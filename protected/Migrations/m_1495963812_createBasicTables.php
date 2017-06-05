@@ -33,6 +33,8 @@ class m_1495963812_createBasicTables
             'startSum' => ['type' => 'int', 'length' => 'long'],
             'profit' => ['type' => 'int', 'length' => 'long'],
             'costs' => ['type' => 'int', 'length' => 'long'],
+            'borrowed' => ['type' => 'int', 'length' => 'long'],
+            'loaned' => ['type' => 'int', 'length' => 'long'],
             'debt' => ['type' => 'int', 'length' => 'long'],
             'balance' => ['type' => 'int', 'length' => 'long'],
             '__user_id' => ['type' => 'link'],

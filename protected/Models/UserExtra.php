@@ -16,6 +16,8 @@ class UserExtra
             'startSum' => ['type' => 'int', 'length' => 'long'],
             'profit' => ['type' => 'int', 'length' => 'long'],
             'costs' => ['type' => 'int', 'length' => 'long'],
+            'borrowed' => ['type' => 'int', 'length' => 'long'],
+            'loaned' => ['type' => 'int', 'length' => 'long'],
             'debt' => ['type' => 'int', 'length' => 'long'],
             'balance' => ['type' => 'int', 'length' => 'long'],
         ],
@@ -31,18 +33,29 @@ class UserExtra
             return true;
         }
         if (!preg_match('~^(0|[1-9]{1}\d*)$~', $val)) {
-            throw new Exception('Стартовая сумма должна быть больше или равна 0. Можно использовать только целые числа');
+            throw new Exception('Стартовая сумма должна быть больше или равна 0, можно использовать только целые числа');
         }
         return true;
     }
 
-    protected function validateDebt($val)
+    protected function validateBorrowed($val)
     {
         if (null == $val && '' !== $val) {
             return true;
         }
-        if (!preg_match('~^(0|-?[1-9]{1}\d*)$~', $val)) {
-            throw new Exception('В величине долга можно использовать только целые числа');
+        if (!preg_match('~^(0|[1-9]{1}\d*)$~', $val)) {
+            throw new Exception('Поле "Я должен" должно быть больше или равно 0, можно использовать только целые числа');
+        }
+        return true;
+    }
+
+    protected function validateLoaned($val)
+    {
+        if (null == $val && '' !== $val) {
+            return true;
+        }
+        if (!preg_match('~^(0|[1-9]{1}\d*)$~', $val)) {
+            throw new Exception('Поле "Мне должны" должно быть больше или равно 0, можно использовать только целые числа');
         }
         return true;
     }

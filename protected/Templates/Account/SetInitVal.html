@@ -12,8 +12,13 @@
 
             {% if (init) %}
 
-                <p>Стартовая сумма: {{ startSum }} руб.</p>
-                <p>Суммарный долг: {{ debt }} руб.</p>
+                <p>Стартовая сумма: {{ extra.startSum }} руб.</p>
+                <p>Доходы: {{ extra.profit }} руб.</p>
+                <p>Расходы: {{ extra.costs }} руб.</p>
+                <p>Я должен: {{ extra.borrowed }} руб.</p>
+                <p>Мне должны: {{ extra.loaned }} руб.</p>
+                <p>Суммарный долг: {{ extra.debt }} руб.</p>
+                <p>Текущий баланс: {{ extra.balance }} руб.</p>
                 <h4><a href="/account/settings/">Перейти к другим настройкам</a></h4>
 
             {% else %}
@@ -32,9 +37,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="debt" class="col-sm-2 control-label">Суммарный долг</label>
+                        <label for="borrowed" class="col-sm-2 control-label">Я должен</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control input-sm" id="debt" name="values[debt]" value="{{ values.debt }}">
+                            <input type="text" class="form-control input-sm" id="borrowed" name="values[borrowed]" value="{{ values.borrowed }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loaned" class="col-sm-2 control-label">Мне должны</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control input-sm" id="loaned" name="values[loaned]" value="{{ values.loaned }}">
                         </div>
                     </div>
                     <div class="form-group">
