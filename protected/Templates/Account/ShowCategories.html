@@ -1,0 +1,50 @@
+{% extends 'Index.html' %}
+
+{% block content %}
+
+    <h2>Категории</h2>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Список категорий</div>
+        <table class="table table-bordered table-hover table-condensed table-responsive">
+            <tr>
+                <th style="text-align: center">Название</th>
+                <th style="text-align: center">Удаление</th>
+                <th colspan="2" style="text-align: center">Перемещение</th>
+            </tr>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td style="text-align: center">
+                        {% if (category.notDeleted) %}
+                            Запрещено
+                        {% else %}
+                            <a href="/category/delete/?id={{ category.getPk }}">
+                                <button type="button" class="btn btn-danger btn-xs">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Удалить
+                                </button>
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td style="text-align: center">
+                        <a href="/category/up/?id={{ category.getPk }}">
+                            <button type="button" class="btn btn-primary btn-xs">
+                                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Вверх
+                            </button>
+                        </a>
+                    </td>
+                    <td style="text-align: center">
+                        <a href="/category/down/?id={{ category.getPk }}">
+                            <button type="button" class="btn btn-primary btn-xs">
+                                <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> Вниз
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <h4><a href="/account/settings/">Перейти к другим настройкам</a></h4>
+
+{% endblock %}

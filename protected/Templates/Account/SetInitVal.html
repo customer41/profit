@@ -2,11 +2,17 @@
 
 {% block content %}
 
-    <h2>Начальные значения</h2>
+    {% if (init) %}
+        {% set header, title = 'Текущие значения', 'Просмотр текущих значений' %}
+    {% else %}
+        {% set header, title = 'Начальные значения', 'Установка начальных значений' %}
+    {% endif %}
+
+    <h2>{{ header }}</h2>
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Установка начальных значений</h3>
+            <h3 class="panel-title">{{ title }}</h3>
         </div>
         <div class="panel-body">
 
@@ -19,6 +25,7 @@
                 <p>Мне должны: {{ extra.loaned }} руб.</p>
                 <p>Суммарный долг: {{ extra.debt }} руб.</p>
                 <p>Текущий баланс: {{ extra.balance }} руб.</p>
+
                 <h4><a href="/account/settings/">Перейти к другим настройкам</a></h4>
 
             {% else %}

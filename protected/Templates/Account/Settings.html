@@ -2,10 +2,30 @@
 
 {% block content %}
 
+    {% if (init) %}
+        {% set values = 'Начальные значения' %}
+    {% else %}
+        {% set values = 'Текущие значения' %}
+    {% endif %}
+
     <h2>Персональные настройки сервиса</h2>
 
-    <ul>
-        <li><h3><a href="/account/setInitVal/">Начальные значения</a></h3></li>
+    <ul id="list">
+        <li>
+            <h4>
+                <a href="/account/setInitVal/">{{ values }}</a>
+                {% if (not init) %}
+                    <button type="button" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Настроено
+                    </button>
+                {% endif %}
+            </h4>
+        </li>
+        <li>
+            <h4>
+                <a href="/account/showCategories/">Список категорий</a>
+            </h4>
+        </li>
     </ul>
 
 {% endblock %}

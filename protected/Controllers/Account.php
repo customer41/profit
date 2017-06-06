@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Category;
 use T4\Core\MultiException;
 use T4\Mvc\Controller;
 
@@ -24,7 +25,15 @@ class Account
 
     public function actionSettings()
     {
-
+        $extra = $this->app->user->extra;
+        $init = false;
+        foreach ($extra as $value) {
+            if (null == $value) {
+                $init = true;
+                break;
+            }
+        }
+        $this->data->init = $init;
     }
 
     public function actionSetInitVal($values = null)
@@ -46,6 +55,11 @@ class Account
                 $this->data->errors = $errors;
             }
         }
+    }
+
+    public function actionShowCategories()
+    {
+        $this->data->categories = Category::findAllTree(['where' => $this->app->user->getPk()]);
     }
 
 }
