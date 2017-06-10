@@ -35,8 +35,8 @@ class User
         if (null !== $register) {
             try {
                 $auth = new Identity();
-                $auth->register($register);
-                $this->redirect('/');
+                $user = $auth->register($register);
+                $this->redirect('/account/add/?userId=' . $user->getPk());
             } catch (MultiException $e) {
                 $this->data->errors = $e;
                 $this->data->register = $register;

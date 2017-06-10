@@ -4,23 +4,19 @@ namespace App\Migrations;
 
 use T4\Orm\Migration;
 
-class m_1496736266_createTriggerToSetInitValues
+class m_1496736266_createTriggerToSetExtraValues
     extends Migration
 {
 
     public function up()
     {
         $query = <<<LABEL
-            CREATE TRIGGER `set_values` 
-            BEFORE UPDATE ON `__users_extra` 
-            FOR EACH ROW 
+            CREATE TRIGGER `set_values` BEFORE UPDATE ON `__users_extra` FOR EACH ROW 
             BEGIN 
-            SET 
-            NEW.`debt` = NEW.`borrowed` - NEW.`loaned`, 
-            NEW.`balance` = NEW.`startSum` + NEW.`profit` - NEW.`costs` + NEW.`debt`; 
+            SET NEW.`debtTotal` = NEW.`debtPlus` - NEW.`debtMinus`, 
+            NEW.`balance` = NEW.`startSum` + NEW.`profit` - NEW.`costs` + NEW.`debtTotal`; 
             END;
 LABEL;
-
         $this->db->execute($query);
     }
 

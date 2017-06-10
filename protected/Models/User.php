@@ -18,7 +18,6 @@ class User
             'registered' => ['type' => 'datetime'],
             'firstName' => ['type' => 'string', 'length' => 30],
             'lastName' => ['type' => 'string', 'length' => 30],
-            'startSum' => ['type' => 'int', 'length' => 'long'],
         ],
 
         'relations' => [

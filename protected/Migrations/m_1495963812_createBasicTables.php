@@ -33,14 +33,18 @@ class m_1495963812_createBasicTables
             'startSum' => ['type' => 'int', 'length' => 'long'],
             'profit' => ['type' => 'int', 'length' => 'long'],
             'costs' => ['type' => 'int', 'length' => 'long'],
-            'borrowed' => ['type' => 'int', 'length' => 'long'],
-            'loaned' => ['type' => 'int', 'length' => 'long'],
-            'debt' => ['type' => 'int', 'length' => 'long'],
+            'debtPlus' => ['type' => 'int', 'length' => 'long'],
+            'debtMinus' => ['type' => 'int', 'length' => 'long'],
+            'debtTotal' => ['type' => 'int', 'length' => 'long'],
             'balance' => ['type' => 'int', 'length' => 'long'],
             '__user_id' => ['type' => 'link'],
         ]);
 
         $this->insert('__users_extra', [
+            'profit' => 0,
+            'costs' => 0,
+            'debtPlus' => 0,
+            'debtMinus' => 0,
             '__user_id' => $adminId,
         ]);
 

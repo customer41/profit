@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Category;
-use T4\Core\MultiException;
+use T4\Core\Exception;
 use T4\Mvc\Controller;
 
 class Account
@@ -25,41 +25,50 @@ class Account
 
     public function actionSettings()
     {
-        $extra = $this->app->user->extra;
-        $init = false;
-        foreach ($extra as $value) {
-            if (null == $value) {
-                $init = true;
-                break;
-            }
-        }
-        $this->data->init = $init;
+        $this->data->configured = (null == $this->app->user->extra->startSum) ? false : true;
     }
 
-    public function actionSetInitVal($values = null)
+    public function actionSetStartSum($startSum = null)
     {
-        $extra = $this->app->user->extra;
-        if (null != $extra->startSum || null != $extra->borrowed || null != $extra->loaned) {
-            $this->data->init = true;
-            $this->data->extra = $extra;
-        }
-
-        if (null !== $values) {
+        if (null !== $startSum) {
             try {
-                $this->data->values = $values;
-                $values->profit = 0;
-                $values->costs = 0;
-                $extra->fill($values)->save();
-                $this->redirect('/account/setInitVal/');
-            } catch (MultiException $errors) {
-                $this->data->errors = $errors;
+                $extra = $this->app->user->extra;
+                $extra->startSum = $startSum;
+                $extra->save();
+                $this->redirect('/account/settings/');
+            } catch (Exception $error) {
+                $this->data->error = $error;
             }
         }
     }
 
-    public function actionShowCategories()
+    public function actionShowCurrentValues()
     {
-        $this->data->categories = Category::findAllTree(['where' => $this->app->user->getPk()]);
+        $this->data->extra = $this->app->user->extra;
+    }
+
+    public function actionEditCategories()
+    {
+        $categories = Category::findAllTree();
+        $this->data->categories = $categories->filter(function (\App\Models\Category $x) {
+            return $x->__user_id == $this->app->user->getPk();
+        });
+    }
+
+    public function actionAddUserExtra($userId)
+    {
+        if (false == User::findByPK($userId)) {
+            $this->redirect('/');
+        }
+
+        (new \App\Models\UserExtra([
+            'profit' => 0,
+            'costs' => 0,
+            'debtPlus' => 0,
+            'debtMinus' => 0,
+            '__user_id' => $userId,
+        ]))->save();
+        $this->redirect('/category/saveAll/?userId=' . $userId);
     }
 
 }

@@ -8,7 +8,6 @@
     <link href="{{ asset('/Assets/css/index.css') }}" rel="stylesheet">
 </head>
 <body>
-
     <div class="container">
 
         <div id="header">
@@ -17,7 +16,7 @@
 
         <div id="identity" class="row">
             <div class="col-sm-9" id="welcome">
-                {% if (app.user is not null) %}
+                {% if (app.user) %}
                     Добро пожаловать, {{ app.user.firstName }} {{ app.user.lastName }}!
                 {% endif %}
             </div>
@@ -62,7 +61,6 @@
     </div>
 
     <div id="footer"></div>
-
     {{ publishJs() }}
 </body>
 </html>

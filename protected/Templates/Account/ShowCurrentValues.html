@@ -1,0 +1,21 @@
+{% extends 'Index.html' %}
+
+{% block content %}
+
+    <h2>Просмотр текущих значений</h2>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p><b>Стартовая сумма:</b> {{ extra.startSum }} руб.</p>
+            <p><b>Доходы (за всё время):</b> {{ extra.profit }} руб.</p>
+            <p><b>Расходы (за всё время):</b> {{ extra.costs }} руб.</p>
+            <p><b>Я должен:</b> {{ extra.debtPlus }} руб.</p>
+            <p><b>Мне должны:</b> {{ extra.debtMinus }} руб.</p>
+            <p><b>Суммарный долг:</b> {{ extra.debtTotal }} руб.</p>
+            <p><b>Текущий баланс:</b> {{ extra.balance }} руб.</p>
+        </div>
+    </div>
+
+    <h4><a href="/account/settings/">Перейти к другим настройкам</a></h4>
+
+{% endblock %}
