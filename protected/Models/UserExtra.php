@@ -29,9 +29,6 @@ class UserExtra
 
     protected function validateStartSum($val)
     {
-        if (null === $val) {
-            return true;
-        }
         if (!preg_match('~^(0|[1-9]{1}\d*)$~', $val)) {
             throw new Exception('Стартовая сумма должна быть больше или равна 0, можно использовать только целые числа');
         }

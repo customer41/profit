@@ -25,7 +25,7 @@ html, body {
     border-bottom: 1px solid #6d7298;
 }
 
-#identity div button, #list button {
+#identity div button {
     background-color: transparent;
     color: black;
     border-radius: 7px;
@@ -48,6 +48,10 @@ html, body {
     margin-top: -70px;
     background-color: #e7e7e7;
     border-top: 1px solid #6d7298;
+}
+
+h1, h1 small {
+    color: white;
 }
 
 h2 {

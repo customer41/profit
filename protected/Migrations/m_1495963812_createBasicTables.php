@@ -40,14 +40,6 @@ class m_1495963812_createBasicTables
             '__user_id' => ['type' => 'link'],
         ]);
 
-        $this->insert('__users_extra', [
-            'profit' => 0,
-            'costs' => 0,
-            'debtPlus' => 0,
-            'debtMinus' => 0,
-            '__user_id' => $adminId,
-        ]);
-
         $this->createTable('__user_roles', [
             'name' => ['type' => 'string'],
             'title' => ['type' => 'string'],

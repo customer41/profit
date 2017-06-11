@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
 use T4\Core\Exception;
 use T4\Mvc\Controller;
 
@@ -12,43 +11,59 @@ class Category
 
     protected function access($action)
     {
-        if (null !== $this->app->user || 'SaveAll' == $action) {
+        if (null !== $this->app->user) {
             return true;
         }
         return false;
     }
 
-    public function actionAdd()
+    public function actionDefault()
     {
-
+        $user = $this->app->user;
+        if ($user->categories->isEmpty()) {
+            $this->redirect('/category/createAll/?userId=' . $user->getPk());
+        } else {
+            $this->redirect('/category/edit/');
+        }
     }
 
-    public function actionSaveAll($userId)
+    public function actionCreateAll($userId = 0)
     {
-        if (false == User::findByPK($userId)) {
-            $this->redirect('/');
-        }
-
-        if (User::findByPK($userId)->categories->isEmpty()) {
-            $categories = [
+        $user = $this->app->user;
+        if ($user->getPk() == $userId && $user->categories->isEmpty()) {
+            $articles = [
                 'Доход', 'Питание', 'Транспорт', 'Медицина', 'Связь', 'Коммунальные услуги',
                 'Товары и услуги для дома', 'Вещи и аксессуары', 'Здоровье и красота', 'Техника и ПО',
                 'Обучение', 'Работа и бизнес', 'Подарки и помощь', 'Досуг и хобби', 'Штрафы и взносы', 'Долги',
                 'Долг+', 'Долг-', 'Списать долг+', 'Списать долг-',
             ];
-
-            $categoriesNotDeleted = ['Доход', 'Долги', 'Долг+', 'Долг-', 'Списать долг+', 'Списать долг-'];
-
-            foreach ($categories as $category) {
-                $item = new \App\Models\Category();
-                $item->name = $category;
-                $item->notDeleted = (in_array($category, $categoriesNotDeleted)) ? 1 : 0;
-                $item->__user_id = $userId;
-                $item->save();
+            $articlesNotDeleted = ['Доход', 'Долги', 'Долг+', 'Долг-', 'Списать долг+', 'Списать долг-'];
+            foreach ($articles as $article) {
+                $category = new \App\Models\Category();
+                $category->name = $article;
+                $category->notDeleted = (in_array($article, $articlesNotDeleted)) ? 1 : 0;
+                $category->user= $user;
+                $category->save();
             }
         }
+        $this->redirect('/category/');
+    }
 
-        $this->redirect('/');
+    public function actionEdit()
+    {
+        $categoriesAll = \App\Models\Category::findAllTree();
+        $categories = $categoriesAll->filter(function (\App\Models\Category $x) {
+            return $x->__user_id == $this->app->user->getPk();
+        });
+        if ($categories->isEmpty()) {
+            $this->redirect('/category/');
+        }
+        $this->data->categories = $categories;
+    }
+
+    public function actionAdd()
+    {
+
     }
 
     public function actionSave($title = null)
@@ -62,7 +77,7 @@ class Category
         } catch (Exception $error) {
             $this->app->flash->error = $error;
         }
-        $this->redirect('/account/editCategories');
+        $this->redirect('/category/edit/');
     }
 
     public function actionDelete($id)
@@ -74,7 +89,7 @@ class Category
         if (in_array($id, $validIds)) {
             \App\Models\Category::findByPK($id)->delete();
         }
-        $this->redirect('/account/editCategories');
+        $this->redirect('/category/edit/');
     }
 
     public function actionUp($id)
@@ -88,7 +103,7 @@ class Category
                 $category->insertBefore($sibling);
             }
         }
-        $this->redirect('/account/editCategories');
+        $this->redirect('/category/edit/');
     }
 
     public function actionDown($id)
@@ -102,7 +117,7 @@ class Category
                 $category->insertAfter($sibling);
             }
         }
-        $this->redirect('/account/editCategories');
+        $this->redirect('/category/edit/');
     }
 
 }
