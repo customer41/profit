@@ -19,6 +19,7 @@ class Category
 
         'relations' => [
             'user' => ['type' => self::BELONGS_TO, 'model' => User::class],
+            'operations' => ['type' => self::HAS_MANY, 'model' => Operation::class],
         ],
     ];
 

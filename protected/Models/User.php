@@ -24,6 +24,7 @@ class User
             'roles' => ['type' => self::MANY_TO_MANY, 'model' => Role::class, 'on' => '__user_roles_to_users'],
             'extra' => ['type' => self::HAS_ONE, 'model' => UserExtra::class],
             'categories' => ['type' => self::HAS_MANY, 'model' => Category::class],
+            'operations' => ['type' => self::HAS_MANY, 'model' => Operation::class],
         ]
     ];
 
