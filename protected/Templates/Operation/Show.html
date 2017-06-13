@@ -1,0 +1,29 @@
+{% extends 'Index.html' %}
+
+{% block content %}
+
+    <h2>Просмотр операций за текущий месяц</h2>
+
+    <div class="panel panel-default">
+        {% if operations is empty %}
+            <h4>Операции за текущий месяц отсутствуют. Вы можете посмотреть отчёты.</h4>
+        {% else %}
+            <table class="table table-bordered table-hover table-condensed table-responsive">
+                <tr>
+                    <th>Дата</th>
+                    <th>Сумма</th>
+                    <th>Категория</th>
+                    <th>Комментарий</th>
+                </tr>
+                {% for operation in operations %}
+                    <tr>
+                        <td>{{ operation.date }}</td>
+                        <td>{{ operation.amount }}</td>
+                        <td>{{ operation.category.name }}</td>
+                        <td>{{ operation.comment }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -18,33 +18,44 @@ class Operation
         return false;
     }
 
-    public function actionDefault()
+    public function actionShow()
     {
-
+        $operations = \App\Models\Operation::findAll([
+            'where' => 'date between "' . date('Y-m-01') . '" and "' . date('Y-m-d') . '" and __user_id=' . $this->app->user->getPk(),
+            'order' => 'date asc'
+        ]);
+        $this->data->operations = $operations;
     }
 
     public function actionAdd()
     {
         $this->data->current_number = date('j');
         $this->data->date = date('F Y, l');
-        $this->data->categories = Category::findAll();
+        $categoriesAll = Category::findAllTree();
+        $categories = $categoriesAll->filter(function (\App\Models\Category $x) {
+            return $x->__user_id == $this->app->user->getPk();
+        });
+        $this->data->categories = $categories;
     }
 
     public function actionSave()
     {
         $post = $this->app->request->post;
-        try {
-            $operation = new \App\Models\Operation();
-            $operation->date = date('Y-m-') . (strlen($post->number) == 2 ? $post->number : '0' . $post->number);
-            $operation->amount = $post->amount;
-            $operation->category = Category::findByName($post->category);
-            $operation->comment = $post->comment;
-            $operation->user = $this->app->user;
-            $operation->save();
-        } catch (Exception $error) {
-            $this->app->flash->error = $error;
+        if (!empty($post->getData())) {
+            try {
+                $operation = new \App\Models\Operation();
+                $operation->date = date('Y-m-') . (strlen($post->number) == 2 ? $post->number : '0' . $post->number);
+                $operation->amount = $post->amount;
+                $operation->category = Category::findByName($post->category);
+                $operation->comment = $post->comment;
+                $operation->user = $this->app->user;
+                $operation->save();
+            } catch (Exception $error) {
+                $this->app->flash->error = $error;
+
+            }
         }
-        $this->redirect('/operation/');
+        $this->redirect('/operation/add/');
     }
 
 }
