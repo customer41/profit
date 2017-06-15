@@ -62,11 +62,10 @@ h2 {
     margin-right: 20px;
 }
 
-.info {
-    border: 1px solid red;
+.bg-info {
     margin-right: 20px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 10px;
-    color: red;
+    color: white;
 }
 

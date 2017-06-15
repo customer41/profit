@@ -50,6 +50,7 @@ class Operation
                 $operation->comment = $post->comment;
                 $operation->user = $this->app->user;
                 $operation->save();
+                $this->redirect('/totals/setValues/?operationId=' . $operation->getPk());
             } catch (Exception $error) {
                 $this->app->flash->error = $error;
 

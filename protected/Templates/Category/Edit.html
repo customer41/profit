@@ -4,7 +4,7 @@
 
     <h2>Редактирование списка категорий</h2>
 
-    <p class="info">
+    <p class="bg-info">
         Внимание! После начала работы с системой &laquo;PROFIT&raquo; редактирование категорий не будет
         доступно в полном объёме. По мере добавления записей конкретной категории будет недоступно её удаление.
     </p>
@@ -24,6 +24,8 @@
                     <td style="text-align: center">
                         {% if (category.notDeleted) %}
                             Запрещено
+                        {% elseif (not category.operations.isEmpty()) %}
+                            Недоступно
                         {% else %}
                             <a href="/category/delete/?id={{ category.getPk }}">
                                 <button type="button" class="btn btn-danger btn-xs">

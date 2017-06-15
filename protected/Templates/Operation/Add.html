@@ -9,10 +9,11 @@
             <h3 class="panel-title">Добавление операции за текущий месяц</h3>
         </div>
         <div class="panel-body">
-            {% if categories is empty %}
+            {% if categories is empty or app.user.extra == false %}
                 <h4>
-                    Прежде чем добавлять записи, зайдите в <a href="/category/">настройки списка категорий</a>
-                    и убедитесь, что Вас этот список устраивает. Там же Вы можете сформировать свой список.
+                    Прежде чем добавлять записи, зайдите в <a href="/settings/">настройки сервиса</a>
+                    и убедитесь в том, что установлены <a href="/totals/">начальные значения</a>, а также
+                    настроен <a href="/category/">список категорий</a> по Вашему усмотрению.
                 </h4>
             {% else %}
                 <p class="text-warning">{{ app.flash.error.getMessage() }}</p>

@@ -87,7 +87,10 @@ class Category
             ->collect('__id');
 
         if (in_array($id, $validIds)) {
-            \App\Models\Category::findByPK($id)->delete();
+            $category = \App\Models\Category::findByPK($id);
+            if ($category->operations->isEmpty()) {
+                $category->delete();
+            }
         }
         $this->redirect('/category/edit/');
     }
