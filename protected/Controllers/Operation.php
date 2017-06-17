@@ -43,20 +43,40 @@ class Operation
         $post = $this->app->request->post;
         if (!empty($post->getData())) {
             try {
-                $operation = new \App\Models\Operation();
-                $operation->date = date('Y-m-') . (strlen($post->number) == 2 ? $post->number : '0' . $post->number);
-                $operation->amount = $post->amount;
-                $operation->category = Category::findByName($post->category);
-                $operation->comment = $post->comment;
-                $operation->user = $this->app->user;
+                $date = date('Y-m-') . (strlen($post->number) == 2 ? $post->number : '0' . $post->number);
+                $amount = $post->amount;
+                $category = Category::findByName($post->category);
+                $comment = ('' == $post->comment) ? $post->category : $post->comment;
+
+                $query  = 'SELECT * FROM operations WHERE date="' . $date . '" AND __category_id=' . $category->getPk();
+                $query .= ' AND comment="' . $comment . '" AND __user_id=' . $this->app->user->getPk();
+                $operation = \App\Models\Operation::findByQuery($query);
+                if (false != $operation) {
+                    $operation->amount += $amount;
+                } else {
+                    $operation = new \App\Models\Operation();
+                    $operation->date = $date;
+                    $operation->amount = $amount;
+                    $operation->category = $category;
+                    $operation->comment = $comment;
+                    $operation->user = $this->app->user;
+                }
                 $operation->save();
-                $this->redirect('/totals/setValues/?operationId=' . $operation->getPk());
+                $this->redirect('/totals/setValues/?categoryName=' . urlencode($category->name) . '&amount=' . $amount);
             } catch (Exception $error) {
                 $this->app->flash->error = $error;
-
             }
         }
         $this->redirect('/operation/add/');
+    }
+
+    public function actionDelete($id = 0)
+    {
+        $operation = \App\Models\Operation::findByPK($id);
+        if (false != $operation) {
+            $operation->delete();
+        }
+        $this->redirect('/totals/setValues/?categoryName=' . urlencode($operation->category->name) . '&amount=' . $operation->amount . '&delete=yes');
     }
 
 }

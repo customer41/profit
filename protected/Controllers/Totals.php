@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\Operation;
 use App\Models\UserExtra;
 use T4\Core\Exception;
 use T4\Mvc\Controller;
@@ -60,33 +59,57 @@ class Totals
         $this->data->startSum = $this->app->user->extra->startSum;
     }
 
-    public function actionSetValues($operationId = 0)
+    public function actionSetValues($categoryName = null, $amount = 0, $delete = null)
     {
-        $operation = Operation::findByPK($operationId);
-        $categoryName = $operation->category->name;
-        $amount = $operation->amount;
         $extra = $this->app->user->extra;
-
         switch ($categoryName) {
             case 'Доход':
-                $extra->profit += $amount;
+                if ('yes' == $delete) {
+                    $extra->profit -= $amount;
+                } else {
+                    $extra->profit += $amount;
+                }
                 break;
             case 'Долг+':
-                $extra->debtPlus += $amount;
+                if ('yes' == $delete) {
+                    $extra->debtPlus -= $amount;
+                } else {
+                    $extra->debtPlus += $amount;
+                }
                 break;
             case 'Долг-':
-                $extra->debtMinus += $amount;
+                if ('yes' == $delete) {
+                    $extra->debtMinus -= $amount;
+                } else {
+                    $extra->debtMinus += $amount;
+                }
                 break;
             case 'Списать долг+':
-
+                if ('yes' == $delete) {
+                    $extra->debtPlus += $amount;
+                    $extra->profit -= $amount;
+                } else {
+                    $extra->debtPlus -= $amount;
+                    $extra->profit += $amount;
+                }
                 break;
             case 'Списать долг-':
+                if ('yes' == $delete) {
+                    $extra->debtMinus += $amount;
+                    $extra->costs -= $amount;
+                } else {
+                    $extra->debtMinus -= $amount;
+                    $extra->costs += $amount;
+                }
                 break;
             default:
-                $extra->costs += $amount;
+                if ('yes' == $delete) {
+                    $extra->costs -= $amount;
+                } else {
+                    $extra->costs += $amount;
+                }
         }
         $extra->save();
-
         $this->redirect('/operation/show/');
     }
 
