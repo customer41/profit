@@ -8,30 +8,38 @@
         {% if operations is empty %}
             <h4>Операции за текущий месяц отсутствуют. Вы можете посмотреть отчёты.</h4>
         {% else %}
-            <table class="table table-bordered table-hover table-condensed table-responsive">
-                <tr>
-                    <th>Дата</th>
-                    <th>Сумма</th>
-                    <th>Категория</th>
-                    <th>Комментарий</th>
-                    <th>Удаление</th>
-                </tr>
-                {% for operation in operations %}
-                    <tr>
-                        <td>{{ operation.date }}</td>
-                        <td>{{ operation.amount }}</td>
-                        <td>{{ operation.category.name }}</td>
-                        <td>{{ operation.comment }}</td>
-                        <td>
-                            <a href="/operation/delete/?id={{ operation.getPk }}">
-                                <button type="button" class="btn btn-danger btn-xs">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Удалить
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
+            <div class="row" style="padding: 10px;">
+                <div class="col-sm-4">
+                    <t4:block path="//operation/showResults/" />
+                </div>
+                <div class="col-sm-8">
+                    <table class="table table-bordered table-hover table-condensed table-responsive">
+                        <caption>Операции</caption>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Сумма</th>
+                            <th>Категория</th>
+                            <th>Комментарий</th>
+                            <th>Удаление</th>
+                        </tr>
+                        {% for operation in operations %}
+                            <tr>
+                                <td>{{ operation.date }}</td>
+                                <td>{{ operation.amount }}</td>
+                                <td>{{ operation.category.name }}</td>
+                                <td>{{ operation.comment }}</td>
+                                <td>
+                                    <a href="/operation/delete/?id={{ operation.getPk }}">
+                                        <button type="button" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Удалить
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
         {% endif %}
     </div>
 {% endblock %}

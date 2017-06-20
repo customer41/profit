@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Category;
+use App\Models\UserExtra;
 use T4\Core\Exception;
 use T4\Mvc\Controller;
 
@@ -77,6 +78,31 @@ class Operation
             $operation->delete();
         }
         $this->redirect('/totals/setValues/?categoryName=' . urlencode($operation->category->name) . '&amount=' . $operation->amount . '&delete=yes');
+    }
+
+    public function actionShowResults()
+    {
+        $this->data->extra = UserExtra::findByPK($this->app->user->getPk());
+
+        $operations = \App\Models\Operation::findAll([
+            'where' => 'date between "' . date('Y-m-01') . '" and "' . date('Y-m-d') . '" and __user_id=' . $this->app->user->getPk()
+        ]);
+
+        $this->data->profit = array_sum($operations->filter(function (\App\Models\Operation $x) {
+            return $x->category->name == 'Доход';
+        })->collect('amount'));
+
+        $costsCategories = $operations->filter(function (\App\Models\Operation $x) {
+            return 0 == $x->category->notDeleted;
+        });
+        $this->data->costs = array_sum($costsCategories->collect('amount'));
+
+        $costsCategories = $costsCategories->group('__category_id');
+        $categoriesAmounts = [];
+        foreach ($costsCategories as $collection) {
+            $categoriesAmounts[$collection[0]->category->name] = array_sum($collection->collect('amount'));
+        }
+        $this->data->categoriesAmounts = $categoriesAmounts;
     }
 
 }

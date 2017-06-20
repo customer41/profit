@@ -1,0 +1,45 @@
+<table class="table table-bordered table-hover table-condensed table-responsive">
+    <caption>Итоговые показатели</caption>
+    <tr>
+        <th>Категория</th>
+        <th>Сумма</th>
+    </tr>
+    <tr>
+        <td>Текущий баланс</td>
+        <td>{{ extra.balance }}</td>
+    </tr>
+    <tr>
+        <td>Суммарные доходы</td>
+        <td>{{ profit }}</td>
+    </tr>
+    <tr>
+        <td>Суммарные расходы</td>
+        <td>{{ costs }}</td>
+    </tr>
+    <tr>
+        <td>Я должен</td>
+        <td>{{ extra.debtPlus }}</td>
+    </tr>
+    <tr>
+        <td>Мне должны</td>
+        <td>{{ extra.debtMinus }}</td>
+    </tr>
+    <tr>
+        <td>Баланс долга</td>
+        <td>{{ extra.debtTotal }}</td>
+    </tr>
+</table>
+
+<table class="table table-bordered table-hover table-condensed table-responsive">
+    <caption>Суммы по категориям</caption>
+    <tr>
+        <th>Категория</th>
+        <th>Сумма</th>
+    </tr>
+    {% for categoryName, amount in categoriesAmounts %}
+        <tr>
+            <td>{{ categoryName }}</td>
+            <td>{{ amount }}</td>
+        </tr>
+    {% endfor %}
+</table>
