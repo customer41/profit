@@ -51,7 +51,7 @@
                 <li role="presentation"><a href="/account/">Личный кабинет</a></li>
                 <li role="presentation"><a href="/settings/">Настройки</a></li>
                 <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         Записи <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -59,7 +59,14 @@
                         <li role="presentation"><a href="/operation/show/">Показать</a></li>
                     </ul>
                 </li>
-                <li role="presentation"><a href="/">Отчёты</a></li>
+                <li role="presentation" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Отчёты <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li role="presentation"><a href="/report/findOperations/">Найти записи</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
 
