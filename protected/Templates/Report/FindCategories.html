@@ -1,0 +1,37 @@
+{% extends 'Index.html' %}
+
+{% block content %}
+
+<h2>Поиск категорий</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Поиск категорий и их сумм</h3>
+    </div>
+    <div class="panel-body">
+
+        <p class="text-warning">{{ app.flash.error }}</p>
+
+        <form class="form-horizontal" action="/report/showCategories/" method="post">
+            <div class="form-group">
+                <label for="startDate" class="col-sm-2 control-label">Дата с</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control input-sm" id="startDate" pattern="{{ pattern }}" name="startDate" value="{{ startDate }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="finishDate" class="col-sm-2 control-label">Дата по</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control input-sm" id="finishDate" pattern="{{ pattern }}" name="finishDate" value="{{ finishDate }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-3">
+                    <button type="submit" class="btn btn-default btn-sm">Поиск</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

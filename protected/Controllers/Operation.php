@@ -98,6 +98,7 @@ class Operation
         $this->data->costs = array_sum($costsCategories->collect('amount'));
 
         $costsCategories = $costsCategories->group('__category_id');
+        ksort($costsCategories);
         $categoriesAmounts = [];
         foreach ($costsCategories as $collection) {
             $categoriesAmounts[$collection[0]->category->name] = array_sum($collection->collect('amount'));

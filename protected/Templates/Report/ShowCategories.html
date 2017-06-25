@@ -1,0 +1,27 @@
+{% extends 'Index.html' %}
+
+{% block content %}
+
+<h2>Просмотр категорий и их сумм за выбранный период</h2>
+
+    <div class="panel panel-default">
+        {% if categoriesAmounts is empty %}
+            <h4>Не найдено категорий за выбранный период.</h4>
+        {% else %}
+            <table class="table table-bordered table-hover table-condensed table-responsive">
+                <caption>Категории</caption>
+                <tr>
+                    <th>Категория</th>
+                    <th>Сумма</th>
+                </tr>
+                {% for category, amount in categoriesAmounts %}
+                    <tr>
+                        <td>{{ category }}</td>
+                        <td>{{ amount }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+
+{% endblock %}
