@@ -82,7 +82,7 @@ class Operation
 
     public function actionShowResults()
     {
-        $this->data->extra = UserExtra::findByPK($this->app->user->getPk());
+        $this->data->extra = $this->app->user->extra;
 
         $operations = \App\Models\Operation::findAll([
             'where' => 'date between "' . date('Y-m-01') . '" and "' . date('Y-m-d') . '" and __user_id=' . $this->app->user->getPk()
